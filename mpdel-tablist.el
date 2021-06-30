@@ -95,12 +95,11 @@
 
 (defun mpdel-tablist--song-format ()
   "Return `tabulated-list-format' value for songs."
-  (vector (list "Title" 30 t)
-          (list "#" 6 nil)
-          (list "Album" 30 t)
-          (list "Disk" 4 t)
-          (list "Date" 5 t)
-          (list "Artist" 0 t)))
+  (vector (list "Artist" 30 t)
+	  (list "#" 6 nil)
+	  (list "Title" 50 t)
+	  (list "Album" 45 t)
+	  (list "Date" 10 t)))
 
 (navigel-method mpdel navigel-entity-to-columns ((entity libmpdel-album))
   (vector (libmpdel-entity-name entity)
@@ -108,12 +107,11 @@
 
 (navigel-method mpdel navigel-entity-to-columns ((song libmpdel-song))
   (vector
-   (propertize (or (libmpdel-entity-name song) "") 'face 'mpdel-tablist-song-name-face)
+   (propertize (or (libmpdel-artist-name song) "") 'face 'mpdel-tablist-artist-face)
    (propertize (or (libmpdel-song-track song) "") 'face 'mpdel-tablist-track-face)
+   (propertize (or (libmpdel-entity-name song) "") 'face 'mpdel-tablist-song-name-face)
    (propertize (or (libmpdel-album-name song) "") 'face 'mpdel-tablist-album-face)
-   (propertize (or (libmpdel-song-disc song) "") 'face 'mpdel-tablist-disk-face)
-   (propertize (or (libmpdel-entity-date song) "") 'face 'mpdel-tablist-date-face)
-   (propertize (or (libmpdel-artist-name song) "") 'face 'mpdel-tablist-artist-face)))
+   (propertize (or (libmpdel-entity-date song) "") 'face 'mpdel-tablist-date-face)))
 
 (navigel-method mpdel navigel-tablist-format ((_entity libmpdel-artist))
   (mpdel-tablist--album-format))
